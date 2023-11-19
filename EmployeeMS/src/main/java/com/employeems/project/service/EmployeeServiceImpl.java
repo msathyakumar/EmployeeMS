@@ -28,7 +28,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDTo getEmployeeById(String id) {
-		return null;
+		var emp = employeeRepository.findById(id);
+		if (emp.isPresent()) {
+			return Employee.employeeDto(emp.get());
+		}
+		return new EmployeeDTo();
 	}
 
 }

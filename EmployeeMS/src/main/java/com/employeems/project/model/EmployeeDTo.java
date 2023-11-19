@@ -18,9 +18,9 @@ public class EmployeeDTo {
 	private String password;
 	private String gender;
 	private double salary;
-//	private Location location;
+	private Location location;
 	
 	public Employee toEmployee() {
-		return new Employee(this.empId, this.empName, this.emailId, this.password, this.gender, this.salary,"");
+		return new Employee(this.empId, this.empName, this.emailId, this.password, this.gender, this.salary,this.location.getId());
 	}
 }

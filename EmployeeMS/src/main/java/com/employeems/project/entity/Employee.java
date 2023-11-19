@@ -29,8 +29,9 @@ public class Employee {
 	
 	public static EmployeeDTo employeeDto(Employee emp) {
 		
-		return new EmployeeDTo(emp.getEmpId(), emp.getEmpName(), emp.getEmailId(), emp.getPassword(), emp.getGender(), emp.getSalary());
-		
+		var re=  new EmployeeDTo(emp.getEmpId(), emp.getEmpName(), emp.getEmailId(), emp.getPassword(), emp.getGender(), emp.getSalary(),new Location());
+		re.getLocation().setId(emp.getLocationId());
+		return re;
 	}
 
 }

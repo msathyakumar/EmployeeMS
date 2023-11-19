@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.employeems.project.model.EmployeeDTo;
+import com.employeems.project.model.Location;
 import com.employeems.project.service.EmployeeService;
 
 @SpringBootApplication
@@ -20,8 +21,8 @@ public class EmployeeMsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		EmployeeDTo emp = new EmployeeDTo("Emp001", "Sathya", "sathya@gmail.com", "pwd", "male", 45000);
-		EmployeeDTo emp1 = new EmployeeDTo("Emp002", "kumar", "sathya@gmail.com", "pwd", "male", 45000);
+		EmployeeDTo emp = new EmployeeDTo("Emp001", "Sathya", "sathya@gmail.com", "pwd", "male", 45000,new Location("Loc001", null, null, null, null));
+		EmployeeDTo emp1 = new EmployeeDTo("Emp002", "kumar", "sathya@gmail.com", "pwd", "male", 45000, new Location("Loc002", null, null, null, null));
 		employeeService.saveEmployee(emp1);
 		employeeService.saveEmployee(emp);
 	}
