@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,11 @@ import com.employeems.project.service.EmployeeService;
 @RestController
 public class EmployeeController {
 
-	RestTemplate restTemplate = new RestTemplate();
+//	@Autowired
+//	DiscoveryClient discoveryClient;
+
+	@Autowired
+	RestTemplate restTemplate;
 	@Autowired
 	EmployeeService employeeService;
 
@@ -45,8 +51,12 @@ public class EmployeeController {
 	@GetMapping("/get/{id}")
 	public EmployeeDTo getByEmpID(@PathVariable String id) {
 		var emp = employeeService.getEmployeeById(id);
-		var location = restTemplate.getForObject("http://localhost:8090/get/" + emp.getLocation().getId(),
-				Location.class);
+//		var clients = discoveryClient.getInstances("LOCATIONMS");
+//		var firstService = clients.get(0).getUri();
+//		var location = restTemplate.getForObject(firstService+"/get/" + emp.getLocation().getId(),
+//				Location.class);
+
+		var location = restTemplate.getForObject("http://LOCATIONMS/get/" + emp.getLocation().getId(), Location.class);
 		emp.setLocation(location);
 		return emp;
 	}

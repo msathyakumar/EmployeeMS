@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import com.employeems.project.model.EmployeeDTo;
 import com.employeems.project.model.Location;
 import com.employeems.project.service.EmployeeService;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class EmployeeMsApplication implements CommandLineRunner {
 
 	@Autowired
