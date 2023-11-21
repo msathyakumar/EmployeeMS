@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.employeems.project.feign.LocationFeign;
 import com.employeems.project.model.EmployeeDTo;
 import com.employeems.project.model.Location;
 import com.employeems.project.service.EmployeeService;
@@ -25,6 +26,10 @@ public class EmployeeController {
 
 	@Autowired
 	RestTemplate restTemplate;
+
+	@Autowired
+	LocationFeign locationFeign;
+
 	@Autowired
 	EmployeeService employeeService;
 
@@ -39,8 +44,9 @@ public class EmployeeController {
 		List<EmployeeDTo> finalList = new ArrayList<>();
 		var list = employeeService.getAllEmployee();
 		for (EmployeeDTo emp : list) {
-			var location = restTemplate.getForObject("http://localhost:8090/get/" + emp.getLocation().getId(),
-					Location.class);
+//			var location = restTemplate.getForObject("http://localhost:8090/get/" + emp.getLocation().getId(),
+//					Location.class);
+			var location = locationFeign.getById(emp.getLocation().getId());
 			emp.setLocation(location);
 			finalList.add(emp);
 		}
@@ -49,14 +55,16 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/get/{id}")
-	public EmployeeDTo getByEmpID(@PathVariable String id) {
+	public EmployeeDTo getByEmpID(@PathVariable("id") String id) {
 		var emp = employeeService.getEmployeeById(id);
 //		var clients = discoveryClient.getInstances("LOCATIONMS");
 //		var firstService = clients.get(0).getUri();
 //		var location = restTemplate.getForObject(firstService+"/get/" + emp.getLocation().getId(),
 //				Location.class);
 
-		var location = restTemplate.getForObject("http://LOCATIONMS/get/" + emp.getLocation().getId(), Location.class);
+//		var location = restTemplate.getForObject("http://LOCATIONMS/get/" + emp.getLocation().getId(), Location.class);
+		var location = locationFeign.getById(emp.getLocation().getId());
+
 		emp.setLocation(location);
 		return emp;
 	}
